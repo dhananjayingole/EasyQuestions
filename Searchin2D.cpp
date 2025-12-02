@@ -10,17 +10,17 @@ class Solution {
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
             
-            int new_row = mid / m; // convert mid index -> row
-            int new_col = mid % m; // convert mid index -> column
+            int new_row = mid / m; // converting mid index -> row
+            int new_col = mid % m; // converting mid index -> column
             
             if (mat[new_row][new_col] == x) {
-                return true;            // target found
+                return true;            // target ele found
             } 
             else if (mat[new_row][new_col] < x) {
-                lo = mid + 1;           // search right half
+                lo = mid + 1;           // search in right half
             }
             else {
-                hi = mid - 1;           // search left half
+                hi = mid - 1;           // search in left half
             }
         }
         return false; // not found

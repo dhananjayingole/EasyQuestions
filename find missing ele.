@@ -1,0 +1,31 @@
+Given an integer array of size n containing distinct values, return the only number missing from the array within this range.
+here it is not a ordinary Question where Ele are in increasing sorted order or in the range of 0 to n.
+
+Example 1
+
+Input: nums = [82, 86, 84, 87, 85];
+
+Output: 83
+
+So here Expected sum is calculated with the formula as -> (min_val + max_val) * total_element / 2;
+
+
+int findMissingArbitraryRange(vector<int>& nums) {
+    int n = nums.size();
+    int min_val = nums[0];
+    int max_val = nums[0];
+    int actual_sum = 0;
+    
+    // Find min, max, and actual sum in a single pass
+    for (int num : nums) {
+        if (num < min_val) min_val = num;
+        if (num > max_val) max_val = num;
+        actual_sum += num;
+    }
+    
+    // Total numbers that should exist in this range
+    long long total_elements = n + 1; 
+    long long expected_sum = (min_val + max_val) * total_elements / 2;
+    
+    return expected_sum - actual_sum;
+}

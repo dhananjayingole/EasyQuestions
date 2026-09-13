@@ -38,6 +38,28 @@ void findSubsequeceswithsumGiven(int curr, int sum, vector<int>&arr, vector<int>
 }
 
 
+// Recursive function to generate all permutations
+void findPermutations(int index, vector<int>& arr, vector<vector<int>>& result) {
+    // Base Case: when index reaches the end of the array, a permutation is formed
+    if (index == arr.size()) {
+        result.push_back(arr);
+        return;
+    }
+
+    // Try placing every remaining element at the current index position
+    for (int i = index; i < arr.size(); i++) {
+        // Swap current element with the element at index i
+        swap(arr[index], arr[i]);
+
+        // Recursively generate permutations for the rest of the array
+        findPermutations(index + 1, arr, result);
+
+        // Backtrack to restore the original array state
+        swap(arr[index], arr[i]);
+    }
+}
+
+
 int main(){
     vector<int>arr = {3,2,1};
     int target = 3;
@@ -68,7 +90,20 @@ int main(){
         }
         cout<<endl;
     }
-    
+
+    vector<int> arr = {1, 2, 3};
+    vector<vector<int>> result;
+
+    findPermutations(0, arr, result);
+
+    // Print all generated permutations
+    cout << "All Permutations:" << endl;
+    for (const auto& perm : result) {
+        for (int val : perm) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
 
     return 0;
 }

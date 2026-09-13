@@ -77,6 +77,22 @@ double powerof(int p, int q){
     return p * powerof(p, q-1);
 }
 
+bool isPalindrome(int left, int right, const string &s) {
+    // Base case: crossed pointers without mismatch -> it's a palindrome
+    if (left >= right) {
+        return true;
+    }
+
+    // Mismatch found -> not a palindrome
+    if (s[left] != s[right]) {
+        return false;
+    }
+
+    // Recurse for the inner substring
+    return isPalindrome(left + 1, right - 1, s);
+}
+
+
 int main(){
     PrintNTimes(3);
 
@@ -111,5 +127,16 @@ int main(){
 
     double powered = powerof(2, 5);
     cout<<"Power of p is :"<<powered<<endl;
+
+    cout<<"Palindrome String checking thorugh Recursion"<<endl;
+    string str = "MADAM";
+
+    if(isPalindrome(0, str.length()-1, str)){
+        cout<<str<< " is a Palindrome."<<endl;
+    }
+    else{
+        cout<<str<<"is not a Palindrome string."<<endl;
+    }
+    
     return 0;
 }

@@ -66,6 +66,38 @@ vector<vector<int>> generatepowerset(vector<int>& nums) {
     return allsubsets;
 }
 
+// [Q4] palindrome Partitioning Questions.
+// string s = "aab"
+// a a b 
+// aa b 
+bool isPalindrome(const string& s) {
+    string s2 = s;
+    reverse(s2.begin(), s2.end());
+    return s2 == s;
+}
+
+void getAllParts(string s, vector<string>& party, vector<vector<string>>& partitions) {
+    if (s.length() == 0) {
+        partitions.push_back(party);
+        return;
+    }
+
+    for (int i = 0; i < s.length(); i++) {
+        string part = s.substr(0, i + 1);
+        if (isPalindrome(part)) {
+            party.push_back(part);
+            getAllParts(s.substr(i + 1), party, partitions);
+            party.pop_back();
+        }
+    }
+}
+
+vector<vector<string>> PalindromePartitions(string s) {
+    vector<string> party;
+    vector<vector<string>> partitions;
+    getAllParts(s, party, partitions);
+    return partitions;
+}
 
 int main() {
     int n = 3;
@@ -98,6 +130,17 @@ int main() {
         cout << "] ";
     }
     cout << endl;
+
+    // palindrome partitioning
+    string s = "aab";
+    vector<vector<string>> result = PalindromePartitions(s);
+
+    for (int i = 0; i < result.size(); i++) {
+        for (int j = 0; j < result[i].size(); j++) {
+            cout << result[i][j] << " ";
+        }
+        cout << endl;
+    }
 
     return 0;
 }

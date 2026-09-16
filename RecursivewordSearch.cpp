@@ -44,3 +44,70 @@ public:
         return false;
     }
 };
+
+
+// Q.2 Rat Maze Questions
+#include <bits/stdc++.h>
+using namespace std;
+
+int dRow[4] = {-1, 0, 1, 0};
+int dCol[4] = {0, 1, 0, -1};
+char dir[4] = {'U', 'R', 'D', 'L'};
+
+void dfshelper(vector<vector<int>>& mat, int r, int c, string path, vector<string>& ans, vector<vector<bool>>& vis) {
+    int n = mat.size();
+    int m = mat[0].size();
+
+    // 1st base case: Boundary check, blocked cell, or already visited
+    if (r < 0 || c < 0 || r >= n || c >= m || mat[r][c] == 0 || vis[r][c]) {
+        return;
+    }
+
+    // 2nd base case: Destination reached
+    if (r == n - 1 && c == m - 1) {
+        ans.push_back(path);
+        return;
+    }
+
+    vis[r][c] = true;
+
+    for (int i = 0; i < 4; i++) {
+        int nrow = r + dRow[i];
+        int ncol = c + dCol[i];
+        dfshelper(mat, nrow, ncol, path + dir[i], ans, vis);
+    }
+
+    // Backtrack
+    vis[r][c] = false;
+}
+
+vector<string> findPath(vector<vector<int>>& mat) {
+    int n = mat.size();
+    vector<string> ans;
+    string path = "";
+    
+    if (n == 0 || mat[0][0] == 0) return ans;
+
+    vector<vector<bool>> vis(n, vector<bool>(n, false));
+    dfshelper(mat, 0, 0, path, ans, vis);
+    
+    return ans;
+}
+
+int main() {
+    vector<vector<int>> mat = {
+        {1, 0, 0, 0},
+        {1, 1, 0, 1},
+        {1, 1, 0, 0},
+        {0, 1, 1, 1}
+    };
+
+    vector<string> result = findPath(mat);
+
+    for (const string& path : result) {
+        cout << path << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
